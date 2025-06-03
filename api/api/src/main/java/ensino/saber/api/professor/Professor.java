@@ -2,6 +2,7 @@ package ensino.saber.api.professor;
 
 import ensino.saber.api.endereco.Endereco;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 @Entity(name = "professor")
@@ -14,7 +15,8 @@ import lombok.*;
 @ToString
 public class Professor {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -35,5 +37,23 @@ public class Professor {
         this.disciplina = dados.disciplina();
         this.telefone = dados.telefone();
         this.endereco = new Endereco(dados.endereco());
+    }
+
+    public void atualizarDados(DadosAtualizacaoProfessor dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.email() != null) {
+            this.email = dados.email();
+        }
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if (dados.disciplina() != null) {
+            this.disciplina = dados.disciplina();
+        }
+        if (dados.endereco() != null) {
+            this.endereco.atualizarDados(dados.endereco());
+        }
     }
 }
